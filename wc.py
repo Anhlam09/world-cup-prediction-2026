@@ -107,8 +107,17 @@ for team, pct in result.head(15).items():
 # ---------- Step 6: make the chart ----------
 top = result.head(12).iloc[::-1]
 fig, ax = plt.subplots(figsize=(9, 6))
-bars = ax.barh(top.index, top.values, color='#2e7d32')
-bars[-1].set_color('#f9a825')
+TEAM_COLORS = {
+    'Brazil': '#FEDD00', 'France': '#002395', 'Spain': '#AA151B',
+    'Argentina': '#75AADB', 'Germany': '#000000', 'Portugal': '#006600',
+    'England': '#FFFFFF', 'Netherlands': '#F36C21', 'Belgium': '#ED2939',
+    'Uruguay': '#0038A8', 'Croatia': '#FF0000', 'Colombia': '#FCD116',
+    'Morocco': '#C1272D', 'Switzerland': '#D52B1E', 'United States': '#3C3B6E',
+    'Mexico': '#006847', 'Japan': '#000080', 'Italy': '#0066CC',
+}
+bars = ax.barh(top.index, top.values,
+               color=[TEAM_COLORS.get(t, '#9e9e9e') for t in top.index],
+               edgecolor='#333333', linewidth=0.8)
 for bar, val in zip(bars, top.values):
     ax.text(val + 0.3, bar.get_y() + bar.get_height()/2,
             f'{val:.1f}%', va='center', fontsize=10)
